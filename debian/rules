@@ -1,9 +1,13 @@
 #!/usr/bin/make -f
 
-package = libnginx-mod-brotli
+package = openresty-brotli
+
+export NO_PKG_MANGLE=1
+export QA_RPATHS=$[ 0x0002 ]
+export NJBS = `nproc`
 
 %:
-	dh $@
+	dh $@ --parallel --with autotools-dev,systemd
 
 clean:
 	dh_testdir
@@ -12,12 +16,43 @@ clean:
 	rm -f $(CURDIR)/objs
 
 override_dh_auto_configure:
-	./configure --add-dynamic-module=../ngx_brotli --with-compat ${PS_NGX_EXTRA_FLAGS}
+	./configure \
+		--with-cc-opt="-DNGX_LUA_ABORT_AT_PANIC -I/usr/local/openresty/zlib/include -I/usr/local/openresty/pcre/include -I/usr/local/openresty/openssl111/include" \
+		--with-ld-opt="-L/usr/local/openresty/zlib/lib -L/usr/local/openresty/pcre/lib -L/usr/local/openresty/openssl111/lib -Wl,-rpath,/usr/local/openresty/zlib/lib:/usr/local/openresty/pcre/lib:/usr/local/openresty/openssl111/lib" \
+		--with-pcre-jit \
+		--without-http_rds_json_module \
+		--without-http_rds_csv_module \
+		--without-lua_rds_parser \
+		--with-stream \
+		--with-stream_ssl_module \
+		--with-stream_ssl_preread_module \
+		--with-http_v2_module \
+		--without-mail_pop3_module \
+		--without-mail_imap_module \
+		--without-mail_smtp_module \
+		--with-http_stub_status_module \
+		--with-http_realip_module \
+		--with-http_addition_module \
+		--with-http_auth_request_module \
+		--with-http_secure_link_module \
+		--with-http_random_index_module \
+		--with-http_gzip_static_module \
+		--with-http_sub_module \
+		--with-http_dav_module \
+		--with-http_flv_module \
+		--with-http_mp4_module \
+		--with-http_gunzip_module \
+		--with-threads \
+		--with-luajit-xcflags='-DLUAJIT_NUMMODE=2 -DLUAJIT_ENABLE_LUA52COMPAT' \
+		-j$(NJBS) \
+		--add-dynamic-module=../ngx_brotli ${PS_NGX_EXTRA_FLAGS}
+
+override_dh_usrlocal:
 
 override_dh_auto_build:
-	make modules
+	make
 
 override_dh_auto_install:
-	mkdir -p etc/nginx/modules
-	cp objs/ngx_http_brotli_static_module.so etc/nginx/modules
-	cp objs/ngx_http_brotli_filter_module.so etc/nginx/modules
+	mkdir -p debian/${package}/usr/local/openresty/nginx/conf/modules
+	cp build/nginx-1.19.3/objs/ngx_http_brotli_static_module.so debian/${package}/usr/local/openresty/nginx/conf/modules
+	cp build/nginx-1.19.3/objs/ngx_http_brotli_filter_module.so debian/${package}/usr/local/openresty/nginx/conf/modules

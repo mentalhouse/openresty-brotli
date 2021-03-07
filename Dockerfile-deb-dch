@@ -10,7 +10,7 @@ ARG DISTRIB=debian
 ARG RELEASE=stretch
 
 FROM debian:stretch
-MAINTAINER Cyril Aknine "caknine@clever-age.com"
+MAINTAINER Jukka Raimovaara "roska@mentalhouse.fi"
 
 ENV TZ=Europe/Paris
 

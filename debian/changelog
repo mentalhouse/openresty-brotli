@@ -1,16 +1,22 @@
-libnginx-mod-brotli (1.0.9+nginx-1.18.0-2~stretch) stretch; urgency=medium
+openresty-brotli (1.0.9+openresty-1.19.3.1-1~stretch1) stretch; urgency=medium
+
+  * Updated upstream.
+
+ -- Cyril Aknine <caknine@clever-age.com>  Sat, 06 Mar 2021 16:36:13 +0100
+
+openresty-brotli (1.0.9+nginx-1.18.0-2~stretch) stretch; urgency=medium
 
   * Updated upstreams.
 
  -- Cyril Aknine <caknine@clever-age.com>  Sat, 31 Oct 2020 17:57:07 +0100
 
-libnginx-mod-brotli (1.0.7+nginx-1.18.0-1~stretch) stretch; urgency=medium
+openresty-brotli (1.0.7+nginx-1.18.0-1~stretch) stretch; urgency=medium
 
   * Updated upstream.
 
  -- Cyril Aknine <caknine@clever-age.com>  Wed, 22 Apr 2020 18:20:41 +0200
 
-libnginx-mod-brotli (1.0.7+nginx-1.16.1-1~stretch) stretch; urgency=medium
+openresty-brotli (1.0.7+nginx-1.16.1-1~stretch) stretch; urgency=medium
 
   * NGiNX Brotli module for stock NGiNX.
 

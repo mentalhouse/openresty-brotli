@@ -3,11 +3,11 @@
 cat <<BANNER
 -----------------------------------------------------------------------
 
-The Brotli dynamic module for nginx have been installed.
-The module configuration is placed under /etc/nginx/conf.d/brotli.conf
+The Brotli dynamic module for openresty have been installed.
+The module configuration is placed under /etc/openresty/brotli.conf
 
-You have to enable this module by adding the following line to nginx
-configuration then reload nginx:
+You have to enable this module by adding the following line to openresty
+configuration then reload openresty:
 
     load_module modules/ngx_http_brotli_filter_module.so;
 
